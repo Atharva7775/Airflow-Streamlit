@@ -162,8 +162,6 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
-excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
 
 def calculate_age(birthdate):
     today = datetime.today()
@@ -171,7 +169,9 @@ def calculate_age(birthdate):
     return age
 
 def read_and_update_excel():
-    
+    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+
     # updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
     
     # Read Excel file using 'openpyxl' engine
@@ -193,6 +193,9 @@ def read_and_update_excel():
     print("Excel file updated successfully! on May 10")
 
 def calculate_age_family_members():
+    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+
     # excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
     # updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
     # preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
