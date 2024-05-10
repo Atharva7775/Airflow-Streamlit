@@ -1,9 +1,9 @@
 import streamlit as st
 from PIL import Image
 
-page_icon = Image.open("favicon.ico")
+page_icon = Image.open("favicon (2).ico")
 st.set_page_config(page_title="Famiology", page_icon=page_icon, layout="wide", initial_sidebar_state="expanded")
-logo = Image.open("favicon.ico")
+logo = Image.open("favicon (2).ico")
 
 # Streamlit UI
 st.sidebar.image("FamiologyTextLogo.png", use_column_width=True)
