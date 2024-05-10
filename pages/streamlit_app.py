@@ -187,7 +187,7 @@ def read_and_update_excel():
     df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
     
     # Save updated Excel file using 'openpyxl' engine
-    with pd.ExcelWriter(updated_excel_file_path, engine='openpyxl') as writer:
+    with pd.ExcelWriter(preprocessed_file_path, engine='openpyxl') as writer:
         df_updated.to_excel(writer, index=False)
     
     print("Excel file updated successfully! on May 10")
@@ -205,7 +205,7 @@ def calculate_age_family_members():
     df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
     
     # Save the updated DataFrame to Excel
-    df_updated.to_excel(updated_excel_file_path, index=False)
+    df_updated.to_excel(preprocessed_file_path, index=False)
     print("")
     print("Family Members Excel file updated successfully! on May 10")
 
