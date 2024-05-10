@@ -170,7 +170,7 @@ def calculate_age(birthdate):
 
 def read_and_update_excel():
     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+    
 
     # updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
     
@@ -189,12 +189,12 @@ def read_and_update_excel():
     # Save updated Excel file using 'openpyxl' engine
     with pd.ExcelWriter(preprocessed_file_path, engine='openpyxl') as writer:
         df_updated.to_excel(writer, index=False)
-    
+    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
     print("Excel file updated successfully! on May 10")
 
 def calculate_age_family_members():
     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    preprocessed_file_path_Y = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+    
 
     # excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
     # updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
@@ -206,6 +206,7 @@ def calculate_age_family_members():
     
     # Save the updated DataFrame to Excel
     df_updated.to_excel(preprocessed_file_path_Y, index=False)
+    preprocessed_file_path_Y = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
     print("")
     print("Family Members Excel file updated successfully! on May 10")
 
