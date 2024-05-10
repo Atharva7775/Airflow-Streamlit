@@ -163,6 +163,9 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
 
+preprocessed_file_path = 'X_New_Processed.xlsx'
+preprocessed_file_path_Y = 'Y_New_Processed.xlsx'
+
 def calculate_age(birthdate):
     today = datetime.today()
     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
@@ -170,7 +173,7 @@ def calculate_age(birthdate):
 
 def read_and_update_excel():
     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    preprocessed_file_path = 'X_New_Processed.xlsx'
+    # preprocessed_file_path = 'X_New_Processed.xlsx'
 
     # updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
     
@@ -194,7 +197,7 @@ def read_and_update_excel():
 
 def calculate_age_family_members():
     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    preprocessed_file_path_Y = 'Y_New_Processed.xlsx'
+    # preprocessed_file_path_Y = 'Y_New_Processed.xlsx'
     # excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
     # updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
     # preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
