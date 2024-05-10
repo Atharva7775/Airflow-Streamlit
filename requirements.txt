@@ -1,0 +1,6 @@
+requests
+streamlit
+pandas
+uuid
+io
+apache-airflow
