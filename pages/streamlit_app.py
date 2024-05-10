@@ -162,15 +162,18 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
+excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+
 def calculate_age(birthdate):
     today = datetime.today()
     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
     return age
 
 def read_and_update_excel():
-    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    
     # updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
-    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+    
     # Read Excel file using 'openpyxl' engine
     df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
     
@@ -190,9 +193,9 @@ def read_and_update_excel():
     print("Excel file updated successfully! on May 10")
 
 def calculate_age_family_members():
-    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    # excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
     # updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
-    preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+    # preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
     df = pd.read_excel(excel_file_path, sheet_name='Family Members', engine='openpyxl')
     df_updated = df.copy()
     df_updated['Date of Birth'] = pd.to_datetime(df_updated['Date of Birth'])
