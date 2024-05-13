@@ -325,22 +325,22 @@ def trigger_dag(url):
         st.error("Failed to trigger DAG run.")
 
 def main():
-    if not file_exists(PREPROCESSED_FILE_PATH) or not file_exists(PREPROCESSED_FILE_PATH_Y):
-        print("Required files not found, please check if DAG has run successfully.")
-        return
+  if not file_exists(PREPROCESSED_FILE_PATH) or not file_exists(PREPROCESSED_FILE_PATH_Y):
+      print("Required files not found, please check if DAG has run successfully.")
+      return
     
-    df = pd.read_excel(PREPROCESSED_FILE_PATH, engine='openpyxl')
-    df1 = pd.read_excel(PREPROCESSED_FILE_PATH_Y, engine='openpyxl')
+  df = pd.read_excel(PREPROCESSED_FILE_PATH, engine='openpyxl')
+  df1 = pd.read_excel(PREPROCESSED_FILE_PATH_Y, engine='openpyxl')
 
-    st.title("DAGs Dashboard")
+  st.title("DAGs Dashboard")
 
-    show_dags = st.button("Show DAGs")
-    if show_dags:
-        url = "http://localhost:8080/api/v1/dags?limit=100&only_active=true&paused=false"
-        dags = get_dags(url)
-        st.write("## Available DAGs:")
-        for dag in dags["dags"]:
-            st.write(f"**DAG ID:** {dag['dag_id']}")
+  show_dags = st.button("Show DAGs")
+  if show_dags:
+      url = "http://localhost:8080/api/v1/dags?limit=100&only_active=true&paused=false"
+      dags = get_dags(url)
+      st.write("## Available DAGs:")
+      for dag in dags["dags"]:
+          st.write(f"**DAG ID:** {dag['dag_id']}")
 
     
 
