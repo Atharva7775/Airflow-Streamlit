@@ -9,7 +9,8 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
 
-EXCEL_FILE_PATH = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+EXCEL_FILE_PATH = 'FamilyOfficeEntityDataSampleV1.xlsx'
+print("The path stored in EXCEL_FILE_PATH is:", EXCEL_FILE_PATH)
 PREPROCESSED_FILE_PATH = EXCEL_FILE_PATH.replace('.xlsx', '_preprocessed.xlsx')
 PREPROCESSED_FILE_PATH_Y = EXCEL_FILE_PATH.replace('.xlsx', '_Y_preprocessed.xlsx')
 
