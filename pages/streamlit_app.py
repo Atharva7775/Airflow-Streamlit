@@ -166,7 +166,10 @@ from datetime import datetime, timedelta
 EXCEL_FILE_PATH = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
 PREPROCESSED_FILE_PATH = EXCEL_FILE_PATH.replace('.xlsx', '_preprocessed.xlsx')
 PREPROCESSED_FILE_PATH_Y = EXCEL_FILE_PATH.replace('.xlsx', '_Y_preprocessed.xlsx')
-                                                   
+
+def file_exists(file_path):
+    return os.path.exists(file_path)
+
 # def calculate_age(birthdate):
 #     today = datetime.today()
 #     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
@@ -322,6 +325,13 @@ def trigger_dag(url):
         st.error("Failed to trigger DAG run.")
 
 def main():
+    if not file_exists(PREPROCESSED_FILE_PATH) or not file_exists(PREPROCESSED_FILE_PATH_Y):
+        print("Required files not found, please check if DAG has run successfully.")
+        return
+    
+    df = pd.read_excel(PREPROCESSED_FILE_PATH, engine='openpyxl')
+    df1 = pd.read_excel(PREPROCESSED_FILE_PATH_Y, engine='openpyxl')
+
     st.title("DAGs Dashboard")
 
     show_dags = st.button("Show DAGs")
