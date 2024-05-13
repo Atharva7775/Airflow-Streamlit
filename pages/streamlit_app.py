@@ -260,9 +260,9 @@ with DAG(dag_id="streamlit_app",
         python_callable=calculate_age_family_members)
     
 
-df = pd.read_excel(preprocessed_file_path, engine='openpyxl')
+df = pd.read_excel(PREPROCESSED_FILE_PATH, engine='openpyxl')
 # file_path_Y = preprocessed_file_path
-df1 = pd.read_excel(preprocessed_file_path_Y, engine='openpyxl')
+df1 = pd.read_excel(PREPROCESSED_FILE_PATH_Y, engine='openpyxl')
 # file_path_Y="/Users/atharvabapat/airflow/Y_New_Processed.xlsx"
 # df1=pd.read_excel(file_path_Y, engine='openpyxl')
 def convert_df_to_excel(df):
