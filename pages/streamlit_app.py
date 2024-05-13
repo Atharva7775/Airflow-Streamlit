@@ -8,9 +8,10 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
+current_directory = os.getcwd()
 
-EXCEL_FILE_PATH = 'FamilyOfficeEntityDataSampleV1.xlsx'
-print("The path stored in EXCEL_FILE_PATH is:", EXCEL_FILE_PATH)
+EXCEL_FILE_PATH = os.path.join(current_directory, 'FamilyOfficeEntityDataSampleV1.xlsx')
+# print("The path stored in EXCEL_FILE_PATH is:", EXCEL_FILE_PATH)
 PREPROCESSED_FILE_PATH = EXCEL_FILE_PATH.replace('.xlsx', '_preprocessed.xlsx')
 PREPROCESSED_FILE_PATH_Y = EXCEL_FILE_PATH.replace('.xlsx', '_Y_preprocessed.xlsx')
 
@@ -120,9 +121,9 @@ def trigger_dag(url):
         st.error("Failed to trigger DAG run.")
 
 def main():
-  if not file_exists(PREPROCESSED_FILE_PATH) or not file_exists(PREPROCESSED_FILE_PATH_Y):
-      print("Required files not found, please check if DAG has run successfully.")
-      return
+  if not os.path.exists(EXCEL_FILE_PATH):
+        print("The original Excel file does not exist. Please check the file path.")
+        return
     
   df = pd.read_excel(PREPROCESSED_FILE_PATH, engine='openpyxl')
   df1 = pd.read_excel(PREPROCESSED_FILE_PATH_Y, engine='openpyxl')
