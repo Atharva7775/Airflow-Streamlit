@@ -163,55 +163,80 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 
 
-preprocessed_file_path = 'X_New_Processed.xlsx'
-preprocessed_file_path_Y = 'Y_New_Processed.xlsx'
+EXCEL_FILE_PATH = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+PREPROCESSED_FILE_PATH = EXCEL_FILE_PATH.replace('.xlsx', '_preprocessed.xlsx')
+PREPROCESSED_FILE_PATH_Y = EXCEL_FILE_PATH.replace('.xlsx', '_Y_preprocessed.xlsx')
+                                                   
+# def calculate_age(birthdate):
+#     today = datetime.today()
+#     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+#     return age
+
+# def read_and_update_excel():
+#     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    
+#     # Define the path for the preprocessed file
+#     preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
+    
+#     # Read Excel file using 'openpyxl' engine
+#     df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
+    
+#     # Make a copy of the DataFrame
+#     df_updated = df.copy()
+    
+#     # Convert 'Date of Birth' column to datetime
+#     df_updated['Date of Birth'] = pd.to_datetime(df_updated['Date of Birth'])
+    
+#     # Calculate age
+#     df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
+    
+#     # Save the updated Excel file using 'openpyxl' engine
+#     with pd.ExcelWriter(preprocessed_file_path, engine='openpyxl') as writer:
+#         df_updated.to_excel(writer, index=False)
+    
+#     print(f"Excel file updated and saved successfully to {preprocessed_file_path} on May 13")
+
+
+# def calculate_age_family_members():
+#     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    
+#     # Define the path for the preprocessed file specific to family members
+#     preprocessed_file_path_Y = excel_file_path.replace('.xlsx', '_Y_preprocessed.xlsx')
+    
+#     # Read Excel file using 'openpyxl' engine for 'Family Members' sheet
+#     df = pd.read_excel(excel_file_path, sheet_name='Family Members', engine='openpyxl')
+#     df_updated = df.copy()
+    
+#     # Convert 'Date of Birth' column to datetime and calculate age
+#     df_updated['Date of Birth'] = pd.to_datetime(df_updated['Date of Birth'])
+#     df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
+    
+#     # Save the updated DataFrame to the new preprocessed file path
+#     with pd.ExcelWriter(preprocessed_file_path_Y, engine='openpyxl') as writer:
+#         df_updated.to_excel(writer, index=False)
+    
+#     print(f"Family Members Excel file updated successfully and saved to {preprocessed_file_path_Y} on May 13")
+
+
 
 def calculate_age(birthdate):
     today = datetime.today()
-    age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-    return age
+    return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
 
 def read_and_update_excel():
-    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    # preprocessed_file_path = 'X_New_Processed.xlsx'
-
-    # updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
-    
-    # Read Excel file using 'openpyxl' engine
-    df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
-    
-    # Make a copy of the DataFrame
-    df_updated = df.copy()
-    
-    # Convert 'Date of Birth' column to datetime
-    df_updated['Date of Birth'] = pd.to_datetime(df_updated['Date of Birth'])
-    
-    # Calculate age
-    df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
-    
-    # Save updated Excel file using 'openpyxl' engine
-    with pd.ExcelWriter(preprocessed_file_path, engine='openpyxl') as writer:
-        df_updated.to_excel(writer, index=False)
-    
-    print("Excel file updated successfully! on May 10")
+    df = pd.read_excel(EXCEL_FILE_PATH, sheet_name='Client Profile', engine='openpyxl')
+    df['Date of Birth'] = pd.to_datetime(df['Date of Birth'])
+    df['Age'] = df['Date of Birth'].apply(calculate_age)
+    df.to_excel(PREPROCESSED_FILE_PATH, index=False, engine='openpyxl')
+    print(f"Excel file updated and saved successfully to {PREPROCESSED_FILE_PATH}")
 
 def calculate_age_family_members():
-    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    # preprocessed_file_path_Y = 'Y_New_Processed.xlsx'
-    # excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    # updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
-    # preprocessed_file_path = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
-    df = pd.read_excel(excel_file_path, sheet_name='Family Members', engine='openpyxl')
-    df_updated = df.copy()
-    df_updated['Date of Birth'] = pd.to_datetime(df_updated['Date of Birth'])
-    df_updated['Age'] = df_updated['Date of Birth'].apply(calculate_age)
-    
-    # Save the updated DataFrame to Excel
-    df_updated.to_excel(preprocessed_file_path_Y, index=False)
-    # preprocessed_file_path_Y = excel_file_path.replace('.xlsx', '_preprocessed.xlsx')
-    print("")
-    print("Family Members Excel file updated successfully! on May 10")
-
+    df = pd.read_excel(EXCEL_FILE_PATH, sheet_name='Family Members', engine='openpyxl')
+    df['Date of Birth'] = pd.to_datetime(df['Date of Birth'])
+    df['Age'] = df['Date of Birth'].apply(calculate_age)
+    df.to_excel(PREPROCESSED_FILE_PATH_Y, index=False, engine='openpyxl')
+    print(f"Family Members Excel file updated successfully and saved to {PREPROCESSED_FILE_PATH_Y}")
+  
 # Define default arguments
 default_args = {
     'owner': 'airflow',
@@ -235,16 +260,6 @@ with DAG(dag_id="streamlit_app",
         python_callable=calculate_age_family_members)
     
 
-
-
-
-
-# def calculate_age(birthdate):
-#     today = datetime.today()
-#     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
-#     return age
-
-# file_path_X = preprocessed_file_path
 df = pd.read_excel(preprocessed_file_path, engine='openpyxl')
 # file_path_Y = preprocessed_file_path
 df1 = pd.read_excel(preprocessed_file_path_Y, engine='openpyxl')
